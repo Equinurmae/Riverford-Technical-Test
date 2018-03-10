@@ -56,7 +56,8 @@
             }).then(function (data) {
                 sourceData = data;
                 
-                //code fronm https://stackoverflow.com/questions/814613/how-to-read-get-data-from-a-url-using-javascript,
+                //function to extract variables from the url
+                //code from https://stackoverflow.com/questions/814613/how-to-read-get-data-from-a-url-using-javascript,
                 //accessed on 10/03/2018 @ 11.25
                 function parseURLParams(url) {
                     var queryStart = url.indexOf("?") + 1,
@@ -78,15 +79,20 @@
                     return parms;
                 }
                 
+                //gets which category to show details for from the url
                 function getCategory() {
                     var category;
+                    
                     var params = parseURLParams(window.location.href);
                     if('category' in params) {
                         category = params['category'][0];
                     }
+                    
                     return category;
                 }
                 
+                //gets a multidimensional array of the individual products and their sales based on the category key,
+                //then sorts it
                 function getArray(data) {
                     var array = [];
                     
@@ -99,15 +105,20 @@
                     return array;
                 }
                 
+                //extracts the nth indexes from a two-dimensional array and places them in another arrya,
+                //so it can be sliced
                 function getNthValues(array, n, beg, end){
                     var result = [];
+                    
                     for(i = 0; i < array.length; i++){
                         result.push(array[i][n]);
                     }
+                    
                     var sliced = result.slice(beg,end);
                     return sliced;
                 }
                 
+                //calculates which colour the bars should be based on the category given
                 function getColour(data, key) {
                     var colourArray = ['75, 192, 192', '255, 99, 132', '54, 162, 235', '153, 102, 255', '255, 206, 86'];
                     var colour = '0, 0, 0';
@@ -125,12 +136,17 @@
                 
                 // TODO: Build data visualisation
                 var ctx = document.getElementById("topTenChart").getContext('2d');
+                
+                //fetches the corresponding dataset from the correct category
                 var dataSet = sourceData[getCategory()];
                 var dataLength = Object.keys(dataSet).length;
                 
+                //resizes the canvas for the rest of the products (after the top ten)
+                //according to how many there are
                 var chartLength = (dataLength - 10) * 10;
                 document.getElementById("restChart").setAttribute('height', chartLength);
 
+                //the chart for the top ten products in the category
                 var vegChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
@@ -159,6 +175,8 @@
                     }
                 });
                 
+                //if there are more than ten products in the category,
+                //the next chart will display the remaining sales
                 if((dataLength - 10) != 0){
                     ctx = document.getElementById("restChart").getContext('2d');
                     var restChart = new Chart(ctx, {
