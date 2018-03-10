@@ -53,7 +53,8 @@
                 return body.json();
             }).then(function (data) {
                 sourceData = data;
-                                          
+                
+                //totals the data for each category
                 function totalData(data) {
                     var total = 0;
                     for(x in data) {
@@ -62,6 +63,7 @@
                     return total;
                 }
                 
+                //produces an array of the categories and their totals and sorts it
                 function getTotalArray(data) {
                     var array = [];
                     
@@ -74,21 +76,26 @@
                     return array;
                 }
                 
+                //gets the nth indexes from a two-dimensional array and places them in another
+                //array, so it can be sliced
                 function getNthValues(array, n, beg, end){
                     var result = [];
+                    
                     for(i = 0; i < array.length; i++){
                         result.push(array[i][n]);
                     }
+                    
                     var sliced = result.slice(beg,end);
                     return sliced;
                 }
                 
+                //called when the chart is clicked, and passes the category clicked as a variable
+                //in the url
                 function showDetail(evt) {
                     var firstPoint = dataChart.getElementAtEvent(evt)[0];
 
                     if (firstPoint) {
                         var label = dataChart.data.labels[firstPoint._index];
-                        var value = dataChart.data.datasets[firstPoint._datasetIndex].data[firstPoint._index];
                     }
 
                     if(label) {
@@ -97,6 +104,9 @@
                 }
 
                 // TODO: Build data visualisation
+                //builds the chart, getting the labels and data from the json file
+                //the last parameter is omitted from getNthValues, so that the slice gets
+                //all of the values up to the end of the array
                 var ctx = document.getElementById("dataChart").getContext('2d');
                 var dataChart = new Chart(ctx, {
                     type: 'bar',
