@@ -1,0 +1,17 @@
+{
+    "Mammals" : {
+        "Dog": 10,
+        "Cat" : 100,
+        "Mouse": 31,
+        "Gerbil": 45,
+        "Tiger": 455,
+        "Lion": 89,
+        "Kangaroo": 789,
+        "Horse": 12
+    },
+    "Reptiles" : {
+        "Lizard": 123,
+        "Snake": 54,
+        "Tortoise": 1
+    }
+}
