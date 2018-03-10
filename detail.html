@@ -32,7 +32,7 @@
         </style>
     </head>
     <body>
-        <h1>Riverford Data Analytics</h1>
+        <h1 id = "heading">Riverford Data Analytics</h1>
         <p><a href="\Riverford-Technical-Test"><- BACK</a></p>
         <div class="chart-container" style="position: relative; height:40vh; width:80vw">
             <h2>Top Ten:</h2>
@@ -145,6 +145,9 @@
                 //according to how many there are
                 var chartLength = (dataLength - 10) * 10;
                 document.getElementById("restChart").setAttribute('height', chartLength);
+                
+                //updates the heading with the category
+                document.getElementById("heading").innerHTML = getCategory() + " Sales Information";
 
                 //the chart for the top ten products in the category
                 var vegChart = new Chart(ctx, {
